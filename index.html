@@ -108,17 +108,11 @@ csvFile.addEventListener("change",async e=>{
    if(b)products.set(b,{barcode:b,itemCode:code,itemName:name});
   }
   if(!products.size)throw Error("No valid products found.");
-  localStorage.setItem("IMC_PRODUCTS",JSON.stringify([...products.entries()]));
-  localStorage.setItem("IMC_PRODUCTS_TIME",new Date().toLocaleString());
   masterCount.textContent="Products: "+products.size;
   setMasterStatus("🟢 Product Master Loaded",true);
   alert("Product Master loaded successfully.\nProducts: "+products.size);
  }catch(err){console.error(err);setMasterStatus("🔴 "+err.message,false);alert("CSV Load Failed:\n"+err.message)}
 });
-try{
- const saved=JSON.parse(localStorage.getItem("IMC_PRODUCTS")||"[]");
- if(saved.length){products=new Map(saved);masterCount.textContent="Products: "+products.size;setMasterStatus("🟢 Product Master Loaded",true)}
-}catch(e){}
 
 startBtn.onclick=()=>{
  if(!operator.value.trim())return alert("Please enter Operator.");
